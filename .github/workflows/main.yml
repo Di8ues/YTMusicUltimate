@@ -11,6 +11,8 @@ on:
         default: ""
         required: true
         type: string    
+
+        
   
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -129,3 +131,18 @@ jobs:
           name: YTMusicUltimate-v${{ github.run_number }}
           files: main/packages/*.ipa
           draft: true
+
+          on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-dotnet@v3
+      - run: dotnet --version
+      - run: dotnet build
